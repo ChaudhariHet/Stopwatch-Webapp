@@ -6,11 +6,10 @@ A minimal, elegant, and fully responsive Stopwatch Timer web application built w
 
 ## 📸 Screenshots
 
-> _Add screenshots here after running the project locally._
 
 | Dark Mode | Light Mode |
 |-----------|------------|
-| ![Dark Mode Screenshot](screenshots/dark.png) | ![Light Mode Screenshot](screenshots/light.png) |
+| ![Dark Mode Screenshot](screenshots/Dark.png) | ![Light Mode Screenshot](screenshots/Light.png) |
 
 ---
 
