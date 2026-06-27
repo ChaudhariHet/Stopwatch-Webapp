@@ -4,15 +4,6 @@ A minimal, elegant, and fully responsive Stopwatch Timer web application built w
 
 ---
 
-## 📸 Screenshots
-
-
-| Dark Mode | Light Mode |
-|-----------|------------|
-| ![Dark Mode Screenshot](screenshots/Dark.png) | ![Light Mode Screenshot](screenshots/Light.png) |
-
----
-
 ## ✨ Features
 
 - **Start / Stop / Resume** — Pause and continue from exactly where you left off
