@@ -134,13 +134,13 @@ Every color in the UI transitions smoothly via CSS `transition` properties.
 
 ## 🌐 Live Demo
 
-> [Live Demo Link](#) — _Add your deployed link here (GitHub Pages / Netlify / Vercel)_
+> [Live Demo Link](https://chaudharihet.github.io/Stopwatch-Webapp/) — _Add your deployed link here (GitHub Pages / Netlify / Vercel)_
 
 ---
 
 ## 📦 GitHub Repository
 
-> [GitHub Repository Link](#) — _Add your repository URL here_
+> [GitHub Repository Link](https://github.com/ChaudhariHet/Stopwatch-Webapp) — _Add your repository URL here_
 
 ---
 
