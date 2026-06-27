@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A minimal, elegant stopwatch timer web application." />
+  <title>Stopwatch Timer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ==================== APP WRAPPER ==================== -->
+  <div class="app-wrapper">
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="app-header">
+      <span class="app-logo" aria-hidden="true">⏱</span>
+      <h1 class="app-title">Stopwatch</h1>
+
+      <!-- Dark / Light Mode Toggle -->
+      <button
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Toggle dark and light mode"
+        title="Toggle theme (D)">
+        <span class="theme-icon" id="themeIcon">☀️</span>
+      </button>
+    </header>
+
+    <!-- ==================== MAIN CARD ==================== -->
+    <main class="card" role="main">
+
+      <!-- Timer Display -->
+      <section class="timer-section" aria-label="Stopwatch display">
+        <div class="timer-display" id="timerDisplay" aria-live="polite" aria-atomic="true">
+          <span class="time-unit" id="hours">00</span>
+          <span class="time-sep">:</span>
+          <span class="time-unit" id="minutes">00</span>
+          <span class="time-sep">:</span>
+          <span class="time-unit" id="seconds">00</span>
+          <span class="time-sep time-sep--small">.</span>
+          <span class="time-unit time-unit--ms" id="milliseconds">00</span>
+        </div>
+
+        <!-- Running indicator dot -->
+        <div class="status-indicator" id="statusIndicator" aria-hidden="true"></div>
+      </section>
+
+      <!-- Control Buttons -->
+      <section class="controls" aria-label="Stopwatch controls">
+        <button
+          class="btn btn--primary"
+          id="startBtn"
+          aria-label="Start stopwatch"
+          title="Start / Pause (Space)">
+          Start
+        </button>
+
+        <button
+          class="btn btn--secondary"
+          id="stopBtn"
+          aria-label="Stop stopwatch"
+          title="Stop (Space)"
+          disabled>
+          Stop
+        </button>
+
+        <button
+          class="btn btn--ghost"
+          id="lapBtn"
+          aria-label="Record lap"
+          title="Lap (L)"
+          disabled>
+          Lap
+        </button>
+
+        <button
+          class="btn btn--danger"
+          id="resetBtn"
+          aria-label="Reset stopwatch"
+          title="Reset (R)"
+          disabled>
+          Reset
+        </button>
+      </section>
+
+      <!-- Keyboard Shortcuts Hint -->
+      <div class="shortcuts-hint" aria-label="Keyboard shortcuts">
+        <span>Space — Start / Stop</span>
+        <span class="hint-divider" aria-hidden="true">·</span>
+        <span>L — Lap</span>
+        <span class="hint-divider" aria-hidden="true">·</span>
+        <span>R — Reset</span>
+        <span class="hint-divider" aria-hidden="true">·</span>
+        <span>D — Theme</span>
+      </div>
+
+    </main>
+
+    <!-- ==================== LAP SECTION ==================== -->
+    <section class="lap-section" id="lapSection" aria-label="Lap history" hidden>
+
+      <div class="lap-header">
+        <h2 class="lap-title">Laps</h2>
+        <span class="lap-count" id="lapCount">0</span>
+      </div>
+
+      <!-- Lap list — newest on top, scrollable -->
+      <ol class="lap-list" id="lapList" reversed aria-label="List of recorded laps"></ol>
+
+    </section>
+
+  </div><!-- end .app-wrapper -->
+
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,614 @@
+/* ============================================================
+   STOPWATCH TIMER — style.css
+   Structure:
+   1. CSS Custom Properties (Themes)
+   2. Reset & Base
+   3. Layout & Wrapper
+   4. Header
+   5. Card
+   6. Timer Display
+   7. Status Indicator
+   8. Control Buttons
+   9. Keyboard Shortcuts Hint
+   10. Lap Section
+   11. Animations & Keyframes
+   12. Responsive — Tablet & Mobile
+============================================================ */
+
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES — DARK THEME (default)
+============================================================ */
+[data-theme="dark"] {
+  --bg-page:          #0d0d0f;
+  --bg-card:          rgba(255, 255, 255, 0.04);
+  --bg-card-border:   rgba(255, 255, 255, 0.08);
+  --bg-btn-primary:   #ffffff;
+  --bg-btn-secondary: rgba(255, 255, 255, 0.08);
+  --bg-btn-ghost:     rgba(255, 255, 255, 0.05);
+  --bg-btn-danger:    rgba(239, 68, 68, 0.12);
+  --bg-lap-row:       rgba(255, 255, 255, 0.03);
+  --bg-lap-row-hover: rgba(255, 255, 255, 0.06);
+
+  --text-primary:     #f0f0f2;
+  --text-secondary:   rgba(240, 240, 242, 0.45);
+  --text-timer:       #ffffff;
+  --text-btn-primary: #0d0d0f;
+  --text-btn-secondary: #f0f0f2;
+  --text-btn-ghost:   rgba(240, 240, 242, 0.7);
+  --text-btn-danger:  #f87171;
+  --text-lap-index:   rgba(240, 240, 242, 0.3);
+
+  --accent:           #ffffff;
+  --accent-glow:      rgba(255, 255, 255, 0.12);
+  --indicator-active: #4ade80;
+  --indicator-idle:   rgba(255, 255, 255, 0.15);
+  --lap-border:       rgba(255, 255, 255, 0.06);
+
+  --shadow-card:      0 24px 60px rgba(0, 0, 0, 0.6),
+                      0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  --shadow-btn:       0 2px 8px rgba(0, 0, 0, 0.4);
+
+  --header-logo-bg:   rgba(255, 255, 255, 0.06);
+}
+
+
+/* ============================================================
+   1b. CSS CUSTOM PROPERTIES — LIGHT THEME
+============================================================ */
+[data-theme="light"] {
+  --bg-page:          #f0f0f5;
+  --bg-card:          rgba(255, 255, 255, 0.75);
+  --bg-card-border:   rgba(0, 0, 0, 0.07);
+  --bg-btn-primary:   #0d0d0f;
+  --bg-btn-secondary: rgba(0, 0, 0, 0.06);
+  --bg-btn-ghost:     rgba(0, 0, 0, 0.04);
+  --bg-btn-danger:    rgba(220, 38, 38, 0.08);
+  --bg-lap-row:       rgba(0, 0, 0, 0.02);
+  --bg-lap-row-hover: rgba(0, 0, 0, 0.05);
+
+  --text-primary:     #111114;
+  --text-secondary:   rgba(17, 17, 20, 0.45);
+  --text-timer:       #0d0d0f;
+  --text-btn-primary: #f0f0f5;
+  --text-btn-secondary: #111114;
+  --text-btn-ghost:   rgba(17, 17, 20, 0.65);
+  --text-btn-danger:  #dc2626;
+  --text-lap-index:   rgba(17, 17, 20, 0.28);
+
+  --accent:           #0d0d0f;
+  --accent-glow:      rgba(0, 0, 0, 0.06);
+  --indicator-active: #16a34a;
+  --indicator-idle:   rgba(0, 0, 0, 0.15);
+  --lap-border:       rgba(0, 0, 0, 0.06);
+
+  --shadow-card:      0 24px 60px rgba(0, 0, 0, 0.10),
+                      0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  --shadow-btn:       0 2px 8px rgba(0, 0, 0, 0.10);
+
+  --header-logo-bg:   rgba(0, 0, 0, 0.05);
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 48px;
+
+  /* smooth theme switch */
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Remove list styles from ol used for laps */
+ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+
+/* ============================================================
+   3. LAYOUT & WRAPPER
+============================================================ */
+.app-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeUp 0.5s ease both;
+}
+
+
+/* ============================================================
+   4. HEADER
+============================================================ */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.app-logo {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--header-logo-bg);
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: background 0.35s ease;
+}
+
+.app-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  flex: 1;
+  transition: color 0.35s ease;
+}
+
+.theme-toggle {
+  margin-left: auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--header-logo-bg);
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  flex-shrink: 0;
+  transition: background 0.35s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--bg-btn-secondary);
+  transform: scale(1.08);
+}
+
+.theme-toggle:active {
+  transform: scale(0.94);
+}
+
+
+/* ============================================================
+   5. CARD — glassmorphism container
+============================================================ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 24px;
+  padding: 40px 36px 32px;
+  box-shadow: var(--shadow-card);
+
+  /* subtle backdrop blur for glassmorphism */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+
+  transition: background 0.35s ease, border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+
+/* ============================================================
+   6. TIMER DISPLAY
+============================================================ */
+.timer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.timer-display {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  line-height: 1;
+  user-select: none;
+}
+
+.time-unit {
+  font-size: clamp(52px, 14vw, 72px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--text-timer);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.35s ease;
+
+  /* smooth digit changes */
+  will-change: contents;
+}
+
+.time-unit--ms {
+  font-size: clamp(26px, 7vw, 36px);
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: -0.02em;
+  transition: color 0.35s ease;
+}
+
+.time-sep {
+  font-size: clamp(40px, 10vw, 56px);
+  font-weight: 300;
+  color: var(--text-secondary);
+  padding: 0 1px;
+  transition: color 0.35s ease;
+}
+
+.time-sep--small {
+  font-size: clamp(22px, 6vw, 30px);
+  padding: 0 2px;
+}
+
+/* Glow effect on timer while running */
+.timer-display.is-running .time-unit {
+  text-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent-glow);
+}
+
+
+/* ============================================================
+   7. STATUS INDICATOR — pulsing dot
+============================================================ */
+.status-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--indicator-idle);
+  transition: background 0.3s ease;
+}
+
+.status-indicator.is-running {
+  background: var(--indicator-active);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+
+/* ============================================================
+   8. CONTROL BUTTONS
+============================================================ */
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn {
+  height: 50px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: var(--shadow-btn);
+  transition: transform 0.15s ease, opacity 0.15s ease,
+              background 0.35s ease, color 0.35s ease,
+              box-shadow 0.15s ease;
+}
+
+/* Start — filled primary */
+.btn--primary {
+  background: var(--bg-btn-primary);
+  color: var(--text-btn-primary);
+}
+
+.btn--primary:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+/* Stop — subtle secondary */
+.btn--secondary {
+  background: var(--bg-btn-secondary);
+  color: var(--text-btn-secondary);
+  border: 1px solid var(--bg-card-border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--bg-btn-ghost);
+  transform: translateY(-1px);
+}
+
+/* Lap — ghost */
+.btn--ghost {
+  background: var(--bg-btn-ghost);
+  color: var(--text-btn-ghost);
+  border: 1px solid var(--bg-card-border);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--bg-btn-secondary);
+  transform: translateY(-1px);
+}
+
+/* Reset — danger tint */
+.btn--danger {
+  background: var(--bg-btn-danger);
+  color: var(--text-btn-danger);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.btn--danger:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* Active press effect */
+.btn:active:not(:disabled) {
+  transform: scale(0.96) translateY(0);
+  box-shadow: none;
+}
+
+/* Disabled state */
+.btn:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* ============================================================
+   9. KEYBOARD SHORTCUTS HINT
+============================================================ */
+.shortcuts-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  transition: color 0.35s ease;
+}
+
+.hint-divider {
+  opacity: 0.4;
+}
+
+
+/* ============================================================
+   10. LAP SECTION
+============================================================ */
+.lap-section {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 20px;
+  padding: 20px 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: background 0.35s ease, border-color 0.35s ease;
+
+  animation: fadeUp 0.3s ease both;
+}
+
+.lap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.lap-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  transition: color 0.35s ease;
+}
+
+.lap-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-btn-ghost);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 20px;
+  padding: 2px 10px;
+  transition: color 0.35s ease, background 0.35s ease;
+}
+
+/* Scrollable list — max 5 laps visible */
+.lap-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+
+  /* custom thin scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-card-border) transparent;
+}
+
+.lap-list::-webkit-scrollbar {
+  width: 4px;
+}
+.lap-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.lap-list::-webkit-scrollbar-thumb {
+  background: var(--bg-card-border);
+  border-radius: 4px;
+}
+
+/* Individual lap row */
+.lap-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--bg-lap-row);
+  border: 1px solid var(--lap-border);
+  transition: background 0.2s ease;
+
+  animation: lapSlide 0.25s ease both;
+}
+
+.lap-item:hover {
+  background: var(--bg-lap-row-hover);
+}
+
+.lap-index {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-lap-index);
+  min-width: 44px;
+}
+
+.lap-time {
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  transition: color 0.35s ease;
+}
+
+.lap-delta {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 60px;
+  text-align: right;
+  transition: color 0.35s ease;
+}
+
+
+/* ============================================================
+   11. ANIMATIONS & KEYFRAMES
+============================================================ */
+
+/* Page / card entrance */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Lap row entrance — slides in from above */
+@keyframes lapSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Status dot pulse */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+
+/* ============================================================
+   12. RESPONSIVE — TABLET & MOBILE
+============================================================ */
+
+/* Tablet */
+@media (max-width: 520px) {
+  .card {
+    padding: 32px 24px 28px;
+    border-radius: 20px;
+    gap: 28px;
+  }
+
+  .lap-section {
+    padding: 18px 18px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 380px) {
+  body {
+    padding: 16px 12px 32px;
+    align-items: flex-start;
+  }
+
+  .card {
+    padding: 28px 18px 24px;
+    gap: 24px;
+    border-radius: 18px;
+  }
+
+  .controls {
+    gap: 8px;
+  }
+
+  .btn {
+    height: 46px;
+    font-size: 0.85rem;
+    border-radius: 10px;
+  }
+
+  .shortcuts-hint {
+    font-size: 0.65rem;
+  }
+
+  .lap-section {
+    border-radius: 16px;
+    padding: 16px 14px;
+  }
+}
